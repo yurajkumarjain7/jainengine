@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Overlay - Inline</title>
+</head>
+<body>
+
+    <div 
+        style="position: relative; width: 600px; height: 400px;"
+        onmouseover="showOverlay(this)"
+        onmouseout="hideOverlay(this)"
+    >
+        <img 
+            src="https://via.placeholder.com/600x400" 
+            alt="Placeholder image" 
+            style="display: block; width: 100%; height: auto;"
+        >
+        <div 
+            class="overlay"
+            style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; height: 100%; width: 100%; background-color: rgba(0, 0, 0, 0.6); display: flex; align-items: center; justify-content: center; opacity: 0; transition: .5s ease;"
+        >
+            <div 
+                style="color: white; font-size: 20px; text-align: center;"
+            >
+                Hello World!
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showOverlay(element) {
+            element.querySelector('.overlay').style.opacity = '1';
+        }
+
+        function hideOverlay(element) {
+            element.querySelector('.overlay').style.opacity = '0';
+        }
+    </script>
+
+</body>
+</html>
