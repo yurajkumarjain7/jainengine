@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Overlay - Inline</title>
+</head>
+<body>
+
+    <div 
+        style="position: relative; width: 600px; height: 400px; margin: auto;"
+        onmouseover="showTextOverlay(this)"
+        onmouseout="hideTextOverlay(this)"
+    >
+        <img 
+            src="https://via.placeholder.com/600x400" 
+            alt="A beautiful landscape image" 
+            style="display: block; width: 100%; height: auto;"
+        >
+        <div 
+            class="overlay-text"
+            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; text-align: center; font-family: Arial, sans-serif; padding: 10px; background-color: rgba(0, 0, 0, 0.5); opacity: 0; transition: opacity 0.5s ease;"
+        >
+            <h2>Nature's Beauty</h2>
+            <p>Explore the great outdoors.</p>
+        </div>
+    </div>
+
+    <script>
+        function showTextOverlay(element) {
+            element.querySelector('.overlay-text').style.opacity = '1';
+        }
+
+        function hideTextOverlay(element) {
+            element.querySelector('.overlay-text').style.opacity = '0';
+        }
+    </script>
+
+</body>
+</html>
