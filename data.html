@@ -1,1 +1,93 @@
 
+<script>
+    // Replace this with the actual URL of your cloud server
+    const API_URL = 'https://your-server-domain.com';
+
+    let currentGameData;
+
+    // Get references to our HTML elements (same as before)
+    const healthEl = document.getElementById('healthValue');
+    const moneyEl = document.getElementById('moneyValue');
+    const levelEl = document.getElementById('levelValue');
+
+    // Function to save the current game data to the cloud server
+    async function saveGameData() {
+        try {
+            const response = await fetch(`${API_URL}/save-data`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(currentGameData)
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const result = await response.json();
+            console.log('Game data saved successfully:', result);
+
+        } catch (error) {
+            console.error('Error saving game data:', error);
+        }
+    }
+
+    // Function to load game data from the cloud server
+    async function loadGameData() {
+        try {
+            const response = await fetch(`${API_URL}/load-data`);
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const savedData = await response.json();
+            if (savedData && Object.keys(savedData).length > 0) {
+                currentGameData = savedData;
+                console.log('Game data loaded successfully!');
+            } else {
+                // If no data is returned from the server, use default data
+                currentGameData = { health: 100, money: 50, level: 1 };
+                console.log('No saved data found on server. Using default data.');
+            }
+
+            updateDisplay();
+
+        } catch (error) {
+            console.error('Error loading game data:', error);
+            // Fallback to default data in case of a network error
+            currentGameData = { health: 100, money: 50, level: 1 };
+            updateDisplay();
+        }
+    }
+
+    // Function to update the displayed values on the webpage (same as before)
+    function updateDisplay() {
+        healthEl.textContent = currentGameData.health;
+        moneyEl.textContent = currentGameData.money;
+        levelEl.textContent = currentGameData.level;
+    }
+
+    // Event listeners for the buttons (same as before, but call the new save function)
+    document.getElementById('addHealthBtn').addEventListener('click', () => {
+        currentGameData.health += 10;
+        updateDisplay();
+        saveGameData();
+    });
+
+    document.getElementById('addMoneyBtn').addEventListener('click', () => {
+        currentGameData.money += 25;
+        updateDisplay();
+        saveGameData();
+    });
+
+    document.getElementById('levelUpBtn').addEventListener('click', () => {
+        currentGameData.level += 1;
+        updateDisplay();
+        saveGameData();
+    });
+
+    // Load data from the server when the page first loads
+    loadGameData();
+</script>
